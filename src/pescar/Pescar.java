@@ -7,33 +7,28 @@ package pescar;
 
 /**
  *
- * @author alumno
+ * @author Alex y Manu
  */
 public class Pescar {
     
     private static char[] frase;
     private static int pos = 0;
+    LT lector = new LT();
+    
     
     public static void main(String[] args) {
         Pescar init = new Pescar();
         init.inicio();
     }
 
-    private void inicio() {
+    private void inicio() {   
         char opciones;
-        String nombre;
-        LT lector = new LT();
         mainMenu();
         opciones = lector.llegirCaracter();
         while (opciones != 's') {
             switch (opciones) {
                 case '1':
-                    System.out.print("Nombre de usuario:");
-                    nombre = lector.llegirLinia();
-                    //si existe error si no 
-
-                    //System.out.print("Nombre de usuario creado");
-                    mainMenu();
+                    altaUsario();
                     opciones = lector.llegirCaracter();
                     break;
                 case '2':
@@ -61,7 +56,7 @@ public class Pescar {
         }
     }
 
-    public void mainMenu() {
+    private void mainMenu() {
         System.out.println("**************************************");
         System.out.println("*   Bienvenido al programa de pesca  *");
         System.out.println("*            Main Menu               *");
@@ -77,13 +72,36 @@ public class Pescar {
 
     }
 
-    public boolean Comprobar() {
-        
-        return true;
-    }
     
     public static char llegirCaracter() {
         return frase[pos++];
+    }
+    
+    private void altaUsario(){
+        String nombre;
+        char fr;
+        System.out.print("Nombre de usuario:");
+        nombre = lector.llegirLinia();
+        Lectura f = new Lectura("user1.txt");
+        try{
+            f.abrir();
+            f.leerLinea();
+            
+            f.cerrar();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                f.cerrar();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+   
+
+        //System.out.print("Nombre de usuario creado");
+        mainMenu();
     }
 
 }
